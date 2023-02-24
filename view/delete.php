@@ -1,13 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delete</title>
-</head>
-<body>
-    <h1>Delete</h1>
-    
-</body>
-</html>
+<?php 
+require_once('C:\xampp\htdocs\mvcphpTeste\model\model.php');
+require_once('C:\xampp\htdocs\mvcphpTeste\controller\controller.php');
+require_once('C:\xampp\htdocs\mvcphpTeste\config\config.php');
+
+$db = new db();
+$pdo = $db->connection();
+
+$model = new Model($pdo);
+$controller = new Controller($model);
+
+if (isset($_POST['confirm'])) {
+    $id = $_POST['id'];
+    $controller->delete($id);
+    header("Location: http://localhost/mvcphpteste/index.php");  
+    exit();
+}else {
+    header("Location: http://localhost/mvcphpteste/index.php");  
+    exit();
+}
+?>

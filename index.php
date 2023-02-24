@@ -19,16 +19,15 @@ $controller = new Controller($model);
 <body>
     <h1>Users</h1>
     <a href='http:\\localhost\mvcphpteste\view\addStudent.php'>Add new User</a>    
+    <form action="http:\\localhost\mvcphpteste\index.php" method="get">
+        <input type="text" name="q" placeholder="Search...">
+        <button type="submit" name='search'>Search</button>
+    </form>
+
     <?php
 
-    $controller->index();
-
+        $controller->index();
+    
     ?>
-<!-- 
-    <a href="http:\\localhost\mvcphpteste\view\addStudent.php">Add User</a>
-    <a href="http:\\localhost\mvcphpteste\view\view.php">select User</a>
-    <a href="http:\\localhost\mvcphpteste\view\delete.php">delete User</a>
-    <a href="http:\\localhost\mvcphpteste\view\editStudent.php">edit User</a>
-     -->
 </body>
 </html>

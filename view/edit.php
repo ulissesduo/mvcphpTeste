@@ -8,16 +8,17 @@ $pdo = $db->connection();
 
 $model = new Model($pdo);
 $controller = new Controller($model);
-$teste = $controller->index2($_GET['id']);
-print_r($teste);
+// $teste = $controller->index();
+// print_r($teste);
 
 
-// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-//     $id = $_POST['id'];
-//     $name = $_POST['nome'];
-    
-//     $controller->update($id, $name);
-//     header("Location: http://localhost/mvcphpteste/index.php");
-//     exit();
-// }
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = $_POST['id'];
+    $name = $_POST['nome'];
+    // echo "id: $id\n";
+
+    $controller->update($id, $name);
+    header("Location: http://localhost/mvcphpteste/index.php");
+    exit();
+}
 ?>

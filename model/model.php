@@ -35,7 +35,13 @@ class Model{
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
-    
+    public function filter($searchTerm){
+        $sql = "SELECT * FROM username WHERE name LIKE :searchTerm";
+        $searchTerm = "%{$searchTerm}%";
+        $stmt->bindParam(":searchTerm", $searchTerm);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } 
     
     public function update($id, $nome){
         $sql = "UPDATE username SET nome=:nome WHERE id=:id";
@@ -43,8 +49,10 @@ class Model{
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
     
+        echo "id: $id\n";
+        echo "query: $sql\n";
         if($stmt->execute()){
-            return true;
+            return $stmt->rowCount();
         }
         else{
             echo 'edit failed';
@@ -54,7 +62,15 @@ class Model{
     
     
     public function delete($id){
-        return 'delete Model';
+        $sql = "DELETE FROM username WHERE id=:id";
+        $stmt = $this->con->prepare($sql);
+        $stmt->bindParam(':id',$id);
+        if($stmt->execute()){
+         
+            return $stmt->rowCount();   
+        }else{
+            return false;
+        }
     }
 }
 ?>

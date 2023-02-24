@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 require_once('C:\xampp\htdocs\mvcphpTeste\model\model.php');
 require_once('C:\xampp\htdocs\mvcphpTeste\controller\controller.php');
 require_once('C:\xampp\htdocs\mvcphpTeste\config\config.php');
@@ -11,12 +14,8 @@ $controller = new Controller($model);
 
 $id = '';
 $name = '';
-// if (isset($_POST['create'])) {
-//     $name = $_POST['id'];
-//     $controller->update($id, $name);
-// }
 
-if(isset($_GET['id']) && isset($_GET['name'])) {
+if (isset($_GET['id']) && isset($_GET['name'])) {
     $id = $_GET['id'];
     $name = $_GET['name'];
 }
@@ -24,13 +23,12 @@ if(isset($_GET['id']) && isset($_GET['name'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['nome'];
     $id = $_POST['id'];
-    
+
     $controller->update($id, $name);
     header("Location: http://localhost/mvcphpteste/index.php");
     exit();
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -42,12 +40,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <h1>Edit Student</h1>
-    <form action="http://localhost/mvcphpteste/view/edit.php" method="POST">
+    <form action="editStudent.php" method="POST">
+        <input type="hidden" name="id" value="<?php echo $id; ?>">
         <label for="nome">Name:</label>
         <input type="text" id="nome" name="nome" value="<?php echo $name; ?>" />
 
         <div>
-            <input type="submit" name="create" value="Submit">
+            <input type="submit" name="update" value="Submit">
             <input type="button" value="Cancel">
         </div>
     </form>

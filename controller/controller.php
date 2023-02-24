@@ -9,7 +9,6 @@ class Controller{
 
     public function index(){
         $data = $this->model->select();
-        // echo $data . " asas";
         echo '<table>';
         echo '<tr>';
         echo '<th>ID</th>';
@@ -22,13 +21,17 @@ class Controller{
             echo '<td>' . $row['id'] .'</td>';
             echo '<td>' . $row['nome'] .'</td>';
             // echo '<td><a href="http://localhost/mvcphpteste/view/editStudent.php?action=update&id='.$row['id'].'">Update</a> | <a href="?action=delete&id='.$row['id'].'">Delete</a></td>';
-            echo '<td><a href="http://localhost/mvcphpteste/view/editStudent.php?id=' . $row['id'] . '&name=' . $row['nome'] . '">Update</a> | <a href="http://localhost/mvcphpteste/view/delete.php?id=' . $row['id'] . '&name=' . $row['nome'] . '">Delete</a></td>';
-
+            echo '<td><a href="http://localhost/mvcphpteste/view/editStudent.php?id=' . $row['id'] . '&name=' . $row['nome'] . '">Update</a> | <td><a href="http://localhost/mvcphpteste/view/deleteConfirm.php?id=' . $row['id'] . '&name=' . $row['nome'] . '">Delete</a>';
             echo '</tr>';
         }
         echo '</table>';
     }
 
+    public function userFilter(){
+        $data = $this->model->filter();
+        return $data;
+    }
+    
     public function create(){
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = $_POST['nome'];
@@ -52,21 +55,31 @@ class Controller{
     //     }
     // }
     
-    public function update($id, $name){
-        $name = $_POST['nome'];
-        if($this->model->update($id, $name) != false){
-            header('Location: http://localhost/mvcphpTeste/index.php');
-            exit;
+    public function update($id, $name) {
+        var_dump($id, $name); // debug statement
 
-        }else{
+        if ($this->model->update($id, $name)) {
+            // Redirect to the home page if the update was successful
+            header('Location: http://localhost/mvcphpTeste/index.php');
+            echo 'jaa';
+            echo "Data updated successfully"; // Debug statement
+
+            exit;
+        } else {
+            // Set an error flag to indicate that the update failed
+            $error = true;
+            // Render the editStudent view to allow the user to try again
             require_once('C:\xampp\htdocs\mvcphpTeste\view\editStudent.php');
         }
     }
-    
-    public function delete(){
-        $data = $this->model->delete(1,'kk');
-        echo $data;
+    public function delete($id) {
+        $this->model->delete($id);
     }
+    
+    // public function delete(){
+    //     $data = $this->model->delete(1,'kk');
+    //     echo $data;
+    // }
 }
 
 ?>
