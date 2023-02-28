@@ -35,6 +35,15 @@ class Model{
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+    public function search($searchTerm) {
+        $sql = "SELECT * FROM username WHERE nome LIKE :searchTerm";
+        $stmt = $this->con->prepare($sql);
+        $searchTerm = "%{$searchTerm}%";
+        $stmt->execute(array(":searchTerm" => $searchTerm));
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+
     public function filter($searchTerm){
         $sql = "SELECT * FROM username WHERE name LIKE :searchTerm";
         $searchTerm = "%{$searchTerm}%";

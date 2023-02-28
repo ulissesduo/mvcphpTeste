@@ -2,6 +2,8 @@
 
 class Controller{
     private $model;
+    private $data = array();
+
 
     public function __construct($model){
         $this->model = $model;
@@ -26,6 +28,17 @@ class Controller{
         }
         echo '</table>';
     }
+
+    public function index2() {
+        $searchModel = new Model();
+        if(isset($_POST['searchTerm'])) {
+            $data = $searchModel->search($_POST['searchTerm']);
+        } else {
+            $data = $searchModel->select();
+        }
+        require_once('http://localhost/index2.php');
+    }
+    
 
     public function userFilter(){
         $data = $this->model->filter();
