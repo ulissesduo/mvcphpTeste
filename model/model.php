@@ -43,15 +43,6 @@ class Model{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
-
-    public function filter($searchTerm){
-        $sql = "SELECT * FROM username WHERE name LIKE :searchTerm";
-        $searchTerm = "%{$searchTerm}%";
-        $stmt->bindParam(":searchTerm", $searchTerm);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } 
-    
     public function update($id, $nome){
         $sql = "UPDATE username SET nome=:nome WHERE id=:id";
         $stmt = $this->con->prepare($sql);

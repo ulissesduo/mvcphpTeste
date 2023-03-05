@@ -4,7 +4,6 @@ class Controller{
     private $model;
     private $data = array();
 
-
     public function __construct($model){
         $this->model = $model;
     }
@@ -25,24 +24,27 @@ class Controller{
             // echo '<td><a href="http://localhost/mvcphpteste/view/editStudent.php?action=update&id='.$row['id'].'">Update</a> | <a href="?action=delete&id='.$row['id'].'">Delete</a></td>';
             echo '<td><a href="http://localhost/mvcphpteste/view/editStudent.php?id=' . $row['id'] . '&name=' . $row['nome'] . '">Update</a> | <td><a href="http://localhost/mvcphpteste/view/deleteConfirm.php?id=' . $row['id'] . '&name=' . $row['nome'] . '">Delete</a>';
             echo '</tr>';
-        }
+        }   
         echo '</table>';
     }
 
     public function index2() {
-        $searchModel = new Model();
-        if(isset($_POST['searchTerm'])) {
-            $data = $searchModel->search($_POST['searchTerm']);
-        } else {
-            $data = $searchModel->select();
+        if(isset($_GET['search_query'])) {
+            // search query submitted, filter data
+            $search_query = $_GET['search_query'];
+            $data = $this->model->search($search_query);
+      
+            // load the filter view file
+            // header('Location: http://localhost/mvcphpTeste/index.php');
+            require_once 'views/filter.php';
+          } else {
+            // no search query, show all data
+            $data = $this->model->index();
+      
+            // load the index view file with the data
+            $this->index();
+            require_once 'views/index.php';
         }
-        require_once('http://localhost/index2.php');
-    }
-    
-
-    public function userFilter(){
-        $data = $this->model->filter();
-        return $data;
     }
     
     public function create(){
@@ -55,18 +57,6 @@ class Controller{
             require_once('C:\xampp\htdocs\mvcphpTeste\view\create.php');
         }
     }
-
-    // public function update($id, $name){
-    //     if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    //         $name = $_POST['nome'];
-    //         $this->model->update($id, $name);
-    //         header('Location: http://localhost/mvcphpTeste/index.php');
-    //         exit;
-    //     }
-    //     else{
-    //         require_once('C:\xampp\htdocs\mvcphpTeste\view\editStudent.php');
-    //     }
-    // }
     
     public function update($id, $name) {
         var_dump($id, $name); // debug statement
@@ -88,11 +78,6 @@ class Controller{
     public function delete($id) {
         $this->model->delete($id);
     }
-    
-    // public function delete(){
-    //     $data = $this->model->delete(1,'kk');
-    //     echo $data;
-    // }
 }
 
 ?>
