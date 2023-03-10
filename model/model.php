@@ -9,15 +9,6 @@ class Model{
         $this->con = $PDO;
     }
     
-    // public function create($name){
-    //     $sql = "INSERT INTO username (nome) VALUES (':name')";
-    //     $stmt = $this->con->prepare($sql);
-    //     $stmt = bindParam(':name', $name);
-    //     $stmt->execute();
-    //     return $stmt;
-    // }
-    
-
     //create
     public function create($name) {
         $sql = "INSERT INTO `username`(`nome`) VALUES ('$name')";
@@ -59,7 +50,6 @@ class Model{
             return false;
         }        
     }
-    
     
     public function delete($id){
         $sql = "DELETE FROM username WHERE id=:id";

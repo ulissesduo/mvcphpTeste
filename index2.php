@@ -48,8 +48,8 @@ else {
                     <td><?= $row['id'] ?></td>
                     <td><?= $row['nome'] ?></td>
                     <td>
-                        <a href="http://localhost/mvcphpteste/view/editStudent.php?id=<?php echo $row['id']; ?>">Edit</a> |
-                        <a href="http://localhost/mvcphpteste/view/deleteConfirm.php?id=<?php echo $row['id']; ?>">Delete</a>
+                        <a href="http://localhost/mvcphpteste/view/editStudent.php?id=<? echo $row['id']; ?>">Edit</a> |
+                        <a href="http://localhost/mvcphpteste/view/deleteConfirm.php?id=<? echo $row['id']; ?>">Delete</a>
                     </td>
                 </tr>
                 <?php endforeach; ?>
