@@ -2,24 +2,34 @@
 require_once('C:\xampp\htdocs\mvcphpTeste\config\config.php');
 require_once('C:\xampp\htdocs\mvcphpTeste\model\model.php');
 require_once('C:\xampp\htdocs\mvcphpTeste\controller\controller.php');
-// session_start();
+session_start();
 
 // Get the user ID from the query parameter
 $user_id = $_GET['id'];
 
-// Get the user information using the getUserById() method in your controller
+// Retrieve the username and password from the session
+$username = $_SESSION['username'];
+$password = $_SESSION['password'];
 
+// Get the user information using the getUserById() method in your controller
 $db = new db();
 $pdo = $db->connection();
-
 $model = new Model($pdo);
 $controller = new Controller($model);
 $user = $controller->getUserById($user_id);
 
+// $_SESSION['userType'] = $user['user_type'];
+// $user_type = $_SESSION['user_type'];
+$_SESSION['userType'] = $user['user_type'];
+
+
 // Display the user ID and other user information
-// echo "User ID: " . $user['id'];
-// echo "<br>";
-// echo "Username: " . $user['nome'];
+echo "User ID: " . $user_id;
+echo "<br>";
+echo "Username session: " . $username;
+echo "<br>";
+echo "password session: " . $_SESSION['password'];
+echo "user type session: " . $_SESSION['userType'];
 
 ?>
 
@@ -40,10 +50,11 @@ $user = $controller->getUserById($user_id);
     <div class="container">
       <h1>Welcome <?php echo $user['nome']; ?>!</h1>
       <p>Your ID is <?php echo $user_id; ?>.</p>
-      <p>Your password is <?php echo $user['password']; ?>.</p>
-      <p>Your user type is <?php echo $user['user_type']; ?>.</p>
+      <p>Your password is session of  <?php echo $password; ?>.</p>
+      <p>Your user type in session is <?php echo $_SESSION['userType']; ?>.</p>
 
     </div>
+    <a href="logout.php">Log out</a>
 
     <!-- Bootstrap Bundle with Popper -->
     <script
