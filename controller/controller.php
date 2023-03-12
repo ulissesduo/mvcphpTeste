@@ -46,7 +46,39 @@ class Controller{
             require_once 'views/index.php';
         }
     }
+
+    public function getUserById($id) {
+        $user = $this->model->getUserById($id);
+        return $user;
+    }
     
+    // Verify user credentials
+    public function verifyUser($username, $password) {
+        $model = new Model();
+        $user = $model->verifyUser($username, $password);
+        
+        if (!$user) {
+            return false;
+        }
+        
+        if (password_verify($password, $user['password'])) {
+            return $user['id'];
+        } else {
+            return false;
+        }
+    }
+
+    // public function login(){
+    //     if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            
+    //         $id=$_POST['id'];
+    //         $username=$_POST['username'];
+    //         $password=$_POST['password'];
+    //         $user = $this->model->getUserById($username);
+            
+    //     }
+    // }
+
     public function create(){
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = $_POST['nome'];

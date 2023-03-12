@@ -1,3 +1,38 @@
+<?php
+require_once('C:\xampp\htdocs\mvcphpTeste\config\config.php');
+require_once('C:\xampp\htdocs\mvcphpTeste\model\model.php');
+require_once('C:\xampp\htdocs\mvcphpTeste\controller\controller.php');
+
+$db = new db();
+$pdo = $db->connection();
+
+$model = new Model($pdo);
+$controller = new Controller($model);
+
+session_start();
+
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Check if the username and password are correct
+    $user_id = $model->verifyUser($username, $password);
+
+    if ($user_id) {
+        // Set the user ID in the session
+        $_SESSION['user_id'] = $user_id;
+
+        // Redirect the user to the next page with the user ID as a query parameter
+        header('Location: nextpage.php?id=' . $user_id);
+        exit();
+    } 
+    else {
+        // Handle authentication failure
+        $error = "Invalid username or password";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,39 +44,32 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
-    <title>How to Align Responsive Image in Center in Bootstrap</title>
+    <title>Login Form</title>
   </head>
   <body>
     <div>
       <div class="row align-items-center" style="height: 100vh;">
         <div class="mx-auto col-10 col-md-8 col-lg-6">
           <!-- Form -->
-          <form class="form-example" action="" method="post">
-            <h1>Register form</h1>
+          <form class="form-example" action="loginform.php" method="post">
+            <h1>Login form</h1>
+
+            <?php if (isset($error)) { ?>
+              <div class="alert alert-danger" role="alert">
+                <?php echo $error; ?>
+              </div>
+            <?php } ?>
             
             <!-- Input fields -->
             <div class="form-group">
               <label for="username">Username:</label>
-              <input
-                type="text"
-                class="form-control username"
-                id="username"
-                placeholder="Username..."
-                name="username"
-              />
+              <input type="text" class="form-control" id="username" placeholder="Username..." name="username" required />
             </div>
             <div class="form-group">
               <label for="password">Password:</label>
-              <input
-                type="password"
-                class="form-control password"
-                id="password"
-                placeholder="Password..."
-                name="password"
-              />
+              <input type="password" class="form-control" id="password" placeholder="Password..." name="password" required />
             </div>
 
-            
             <button type="submit" class="btn btn-primary btn-customized mt-4">Login</button>
             <button type="button" class="btn btn-secondary btn-customized mt-4">Cancel</button>
 
@@ -58,4 +86,4 @@
       crossorigin="anonymous"
     ></script>
   </body>
-</html>
+</

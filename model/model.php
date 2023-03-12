@@ -19,6 +19,25 @@ class Model{
         }
     }
 
+    public function getUserById($id) {
+        $sql = "SELECT * FROM username WHERE id = :id LIMIT 1";
+        $stmt = $this->con->prepare($sql);
+        $stmt->execute(array(":id" => $id));
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $user;
+    }
+    public function verifyUser($username, $password) {
+        $sql = "SELECT id FROM username WHERE nome = :username AND password = :password LIMIT 1";
+        $stmt = $this->con->prepare($sql);
+        $stmt->execute(array(":username" => $username, ":password" => $password));
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($user) {
+            return $user['id'];
+        } else {
+            return false;
+        }
+    }
+    
     public function select(){
         $sql = "SELECT * FROM username";
         $stmt = $this->con->query($sql);
