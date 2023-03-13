@@ -11,30 +11,36 @@ $controller = new Controller($model);
 
 session_start();
 
+
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     $_SESSION['username'] = $_POST['username'];
     $_SESSION['password'] = $_POST['password'];
 
-    // $username = $_POST['username'];
-    // $password = $_POST['password'];
-        
     // Check if the username and password are correct
     $user_id = $model->verifyUser($_SESSION['username'], $_SESSION['password']);
+    $userid = $controller->getUserId($_SESSION['username'], $_SESSION['password']);
 
     if ($user_id) {
         // Set the user ID in the session
-        $_SESSION['user_id'] = $user_id;
-        $_SESSION['user_type'] = $user_type;
-
+      $_SESSION['user_id'] = $user_id;
+      $_SESSION['user_type'] = $user_id['user_type']; //esse valor foi passado para outra pagina
+      if($_SESSION['user_type'] == 'teacher'){
         // Redirect the user to the next page with the user ID as a query parameter
-        header('Location: nextpage.php?id=' . $user_id);
+        header('Location: teacherpage.php?id=' . $userid);
         exit();
+      }
+      else if($_SESSION['user_type'] == 'student'){
+        header('Location: testehome.php?id=' . $userid);
+        exit();
+      }        
     } 
     else {
         // Handle authentication failure
         $error = "Invalid username or password";
     }
 }
+
+
 ?>
 
 <!DOCTYPE html>

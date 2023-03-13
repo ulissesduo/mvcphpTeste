@@ -1,9 +1,20 @@
 <?php
+require_once('C:\xampp\htdocs\mvcphpTeste\config\config.php');
+require_once('C:\xampp\htdocs\mvcphpTeste\model\model.php');
+require_once('C:\xampp\htdocs\mvcphpTeste\controller\controller.php');
 session_start();
-
+// Get the user information using the getUserById() method in your controller
+$db = new db();
+$pdo = $db->connection();
+$model = new Model($pdo);
+$controller = new Controller($model);
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     $_SESSION['name'] = $_POST['nome'];
     $_SESSION['password'] = $_POST['password'];
+
+    $user = $controller->getUserById(123); // replace 123 with the ID of the user you want to retrieve
+    print_r($user);
+
     header('Location: http://localhost/mvcphpteste/view/testehome.php');
     exit();
 }

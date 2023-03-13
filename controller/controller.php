@@ -51,7 +51,7 @@ class Controller{
         $user = $this->model->getUserById($id);
         return $user;
     }
-    
+
     // Verify user credentials
     public function verifyUser($username, $password) {
         $model = new Model();
@@ -67,6 +67,10 @@ class Controller{
             return false;
         }
     }
+
+    public function getUserId($username, $password) {
+        return $this->model->getUserId($username, $password);
+      }
 
     // public function login(){
     //     if($_SERVER['REQUEST_METHOD'] == 'POST'){

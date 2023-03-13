@@ -27,17 +27,32 @@ class Model{
         return $user;
     }
     public function verifyUser($username, $password) {
-        $sql = "SELECT id FROM username WHERE nome = :username AND password = :password LIMIT 1";
+        $sql = "SELECT id, user_type FROM username WHERE nome = :username AND password = :password LIMIT 1";
         $stmt = $this->con->prepare($sql);
         $stmt->execute(array(":username" => $username, ":password" => $password));
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($user) {
-            return $user['id'];
+            return $user;
         } else {
             return false;
         }
     }
-    
+
+
+    public function getUserId($username, $password) {
+        $stmt = $this->con->prepare("SELECT id FROM username WHERE nome = :username AND password = :password");
+        $stmt->bindParam(":username", $username);
+        $stmt->bindParam(":password", $password);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($result) {
+          return $result['id'];
+        } else {
+          return false;
+        }
+    }
+
+
     public function select(){
         $sql = "SELECT * FROM username";
         $stmt = $this->con->query($sql);
