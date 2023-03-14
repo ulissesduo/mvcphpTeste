@@ -60,6 +60,16 @@ class Model{
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+
+    public function selectStudent(){
+        $sql = "SELECT * FROM students";
+        $stmt = $this->con->query($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+
     public function search($searchTerm) {
         $sql = "SELECT * FROM username WHERE nome LIKE :searchTerm";
         $stmt = $this->con->prepare($sql);

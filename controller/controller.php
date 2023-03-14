@@ -28,6 +28,26 @@ class Controller{
         echo '</table>';
     }
 
+    public function students(){
+        $data = $this->model->selectStudent();
+        echo '<table>';
+        echo '<tr>';
+        echo '<th>ID</th>';
+        echo '<th>Name</th>';
+        echo '<th>Actions</th>';
+        echo '</tr>';
+
+        foreach ($data as $row) {
+            echo '<tr>';
+            echo '<td>' . $row['id'] .'</td>';
+            echo '<td>' . $row['nome'] .'</td>';
+            // echo '<td><a href="http://localhost/mvcphpteste/view/editStudent.php?action=update&id='.$row['id'].'">Update</a> | <a href="?action=delete&id='.$row['id'].'">Delete</a></td>';
+            echo '<td><a href="http://localhost/mvcphpteste/view/editStudent.php?id=' . $row['id'] . '&name=' . $row['nome'] . '">Update</a> | <td><a href="http://localhost/mvcphpteste/view/deleteConfirm.php?id=' . $row['id'] . '&name=' . $row['nome'] . '">Delete</a>';
+            echo '</tr>';
+        }   
+        echo '</table>';
+    }
+
     public function index2() {
         if(isset($_GET['search_query'])) {
             // search query submitted, filter data

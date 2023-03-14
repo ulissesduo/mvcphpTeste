@@ -12,6 +12,17 @@ $controller = new Controller($model);
 session_start();
 
 
+// Check if the user is already logged in, redirect to the appropriate page
+if (isset($_SESSION['user_id'])) {
+  if ($_SESSION['user_type'] === 'teacher') {
+    header('Location: teacherpage.php');
+    exit();
+  } else if ($_SESSION['user_type'] === 'student') {
+    header('Location: testehome.php');
+    exit();
+  }
+}
+
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     $_SESSION['username'] = $_POST['username'];
     $_SESSION['password'] = $_POST['password'];

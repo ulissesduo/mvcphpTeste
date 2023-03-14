@@ -32,7 +32,7 @@ if (isset($_POST['create'])) {
         <input type="text" name="nome">
         <div>
             <input type="submit" name="create" value="Submit">
-            <input type="button" value="Cancel">
+            <a href="http://localhost/mvcphpteste/view/studentlist.php">Cancel</a><!--Preciso colocar o id do prof que acessou essa pagina para voltar com o id certo? -->
         </div>
     </form>
 </body>
